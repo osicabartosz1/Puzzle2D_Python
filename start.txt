@@ -5,9 +5,58 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href = "style.css" type="text/css">
+   <script>
+    // Skrypt JS
+    function printResult(){
+      const container = document.getElementById('container');
+      const resultElement = document.getElementById('result');
+      const colors = [];
+	
+      // Pobieramy wszystkie dzieci diva #container
+      const children = container.children;
 
-</head>
+      // Iterujemy po dzieciach
+      for (let child of children) {
+        if (child.classList.contains('squareKaleidoscopeRed')) {
+          colors.push('Red');
+        } else if (child.classList.contains('squareKaleidoscopeBlack')) {
+          colors.push('Black');
+        }else if (child.classList.contains('squareKaleidoscopeBlue')) {
+          colors.push('Blue');
+        }else if (child.classList.contains('squareKaleidoscopeYellow')) {
+          colors.push('Yellow');
+        }
+      }
+
+      // Tworzymy string z tablicy i wstawiamy do <p id="result">
+      resultElement.textContent = "[\""+colors.join("\", \"")+"\"]";
+    }
+	
+	  document.addEventListener('click', (event) => {
+    const el = event.target;
+
+    // Sprawdź czy kliknięty element ma jedną z klas
+    if (el.classList.contains('squareKaleidoscopeRed')) {
+      el.classList.remove('squareKaleidoscopeRed');
+      el.classList.add('squareKaleidoscopeBlack');
+    } 
+	else if (el.classList.contains('squareKaleidoscopeBlack')) {
+      el.classList.remove('squareKaleidoscopeBlack');
+      el.classList.add('squareKaleidoscopeBlue');
+    }
+	else if (el.classList.contains('squareKaleidoscopeBlue')) {
+      el.classList.remove('squareKaleidoscopeBlue');
+      el.classList.add('squareKaleidoscopeYellow');
+    }
+	else if (el.classList.contains('squareKaleidoscopeYellow')) {
+      el.classList.remove('squareKaleidoscopeYellow');
+      el.classList.add('squareKaleidoscopeRed');
+    }
+  });
+  </script>
+  </head>
 
 <body>
-
+<button onclick=printResult()>Drukuj</button>
+<h1 id="result"></h1>
 	<div id="container">

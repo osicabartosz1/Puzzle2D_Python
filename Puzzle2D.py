@@ -522,23 +522,20 @@ def pickTheNameOfYoungestFile(folder):
 		if res < t2:
 			res = t2		
 	return res
-
 def saveHistory(toWrite):
 	fhand = open(MainFolder + '\\history.txt','a')
 	fhand.writelines(toWrite + '\n')
 	fhand.close()
-
 def checkHistory(hist):
 	if len(hist) < 54 or (not hist.isdecimal()):
 		return "000000000000000000000000000000000000000000000000000000"
 	return hist
-	
 def selectHistory(folder):
 	temp = pickTheNameOfYoungestFile(folder)
 	temp = addOne(temp, 1) # 33 - pomijanie podobnych rozwiazan
 	return checkHistory(temp)
 
-	
+
 history = ""
 historyEnd = ""
 startTime = time.time()
