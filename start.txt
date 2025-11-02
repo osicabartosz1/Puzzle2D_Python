@@ -59,4 +59,11 @@
 <body>
 <button onclick=printResult()>Drukuj</button>
 <h1 id="result"></h1>
+<div class="controls">
+  <label>
+    Kąt: <span id="angleLabel">0°</span>
+  </label><br>
+  <!-- suwak: min, max, step -->
+  <input id="slider" type="range" min="-180" max="180" step="45" value="0">
+</div>
 	<div id="container">

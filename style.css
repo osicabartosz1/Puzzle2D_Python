@@ -13,6 +13,7 @@ body
 	height: 440px;
 	margin-left: auto;
 	margin-right: auto;
+    transform: rotate(0deg);
 }
 
 

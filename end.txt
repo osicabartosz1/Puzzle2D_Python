@@ -1,4 +1,22 @@
 	</div>
+    <script>
+		const slider = document.getElementById('slider');
+		const box = document.querySelector('#container');
+		const label = document.getElementById('angleLabel');
 
+		slider.addEventListener('input', (e) => {
+		nextDeg = e.target.value;
+		let pending = false;
+
+		label.textContent = nextDeg + '°';
+		if (!pending) {
+			pending = true;
+			requestAnimationFrame(() => {
+				box.style.transform = `rotate(${nextDeg}deg)`;
+				pending = false;
+				});
+			}
+		});
+  </script>
 </body>
 </html>
