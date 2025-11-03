@@ -31,7 +31,11 @@ class Klocek:
 			oldY = blok.posY
 			blok.posX = firstBlokX + (firstBlokY - oldY)
 			blok.posY = firstBlokY - (firstBlokX - oldX)
-		if self.rotation >= 4:
+		if self.rotation == 4 or self.rotation == 8:
+			for blok in self.Blocks:
+				oldY = blok.posY
+				blok.posY = firstBlokX + (firstBlokY - oldY)
+		if self.rotation >= 8:
 			self.rotation = 0
 			return False
 		else:
@@ -131,7 +135,7 @@ class Board:
 		for kloc in self.Klocki:
 			for blok in kloc.Blocks:
 				if (blok.posX == inPosX and blok.posY == inPosY ):
-					return  """<div title = "In otter side """+str(kloc.order)+" "+str(blok.secondColor)+""" "class = "squareKaleidoscope""" + blok.color + """"></div>\n"""
+					return  """<div title = "In otter side """+str(kloc.order)+" "+str(blok.secondColor)+""" "class = "squareKaleidoscope""" + (blok.color if kloc.rotation<4 else blok.secondColor) + """"></div>\n"""
 		return """<div class = "squareKaleidoscopeEmpty"></div>\n"""
 	def printBoard(self, fileName):
 		fhand = open(MainFolder + '\\' +fileName + '.html','w')
@@ -167,10 +171,19 @@ class Board:
 	def doesFitToPattern(self):
 		for kloc in self.Klocki:
 			for blok in kloc.Blocks:
-				if  blok.color != Pattern[(blok.posX - 8)*8 + (blok.posY - 8)]:
+				color = (blok.color if kloc.rotation<4 else blok.secondColor)
+				pColor = Pattern[(blok.posX - 8)*8 + (blok.posY - 8)]
+				if color != pColor:
 					return False
 		return True
 	
+	def doesKlocekFitToPattern(self, kloc):
+		for blok in kloc.Blocks:
+			color = (blok.color if kloc.rotation<4 else blok.secondColor)
+			pColor = Pattern[(blok.posX - 8)*8 + (blok.posY - 8)]
+			if color != pColor:
+				return False
+		return True
 	
 	def moveToNextCorrectPosition(self, klocek):
 		try:
@@ -199,7 +212,7 @@ class Board:
 			return False
 		if myHoles.count(5) > 0 and myHoles.count(2) > 1 :
 			return False
-		while self.isThereAColision(klocek) or (not klocek.doesItFitInBox()):
+		while self.isThereAColision(klocek) or (not klocek.doesItFitInBox()) or (not self.doesKlocekFitToPattern(klocek)):
 			if not klocek.moveNextFitBox():
 				return False
 		self.addKlocek(klocek)
@@ -543,8 +556,11 @@ historyEnd = ""
 startTime = time.time()
 EndTime = time.time()
 counter = 0
+#Earth Zones
+Pattern = ["Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Yellow", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Black", "Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Yellow", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Black"]
+
 #Szachownica
-Pattern = ["Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red", "Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red","Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red","Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red"]
+#Pattern = ["Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red", "Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red","Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red","Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red"]
 
 #Elephant
 #Pattern = ["Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black","Black" ,"Red", "Black", "Red", "Red", "Red", "Black", "Red", "Red", "Black" ,"Red", "Red", "Black", "Black", "Black", "Red", "Black" ,"Red", "Black", "Black", "Black", "Black", "Red", "Black", "Red", "Red" ,"Black", "Black", "Black", "Red", "Black", "Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Red", "Black", "Red", "Red" ,"Black", "Red", "Black", "Red", "Black", "Red", "Red" ,"Black", "Red", "Black", "Red", "Black", "Red", "Black"]
