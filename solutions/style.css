@@ -1,0 +1,84 @@
+body
+{
+	background-color: #303030;
+	color: #ffffff;
+	font-family: 'Lato', sans-serif;
+	font-size: 20px;
+}
+
+#container
+{
+	width: 440px;
+	background-color: #FFFFFF;
+	height: 440px;
+	margin-left: auto;
+	margin-right: auto;
+    transform: rotate(0deg);
+}
+
+
+.squareKaleidoscopeBlack
+{
+	width: 50px;
+	background-color: #000000;
+	height: 50px;
+	float: left;
+}
+.squareKaleidoscopeRed
+{
+	width: 50px;
+	background-color: #B03A2E;
+	height: 50px;
+	float: left;
+}
+.squareKaleidoscopeBlue
+{
+	width: 50px;
+	background-color: #2471A3;
+	height: 50px;
+	float: left;
+}
+.squareKaleidoscopeYellow
+{
+	width: 50px;
+	background-color: #F1C40F;
+	height: 50px;
+	float: left;
+}
+
+.squareKaleidoscopeEmpty
+{
+	width: 50px;
+	background-color: #F1C40F;
+	height: 50px;
+	float: left;
+	
+}
+
+.closeHorizontalBorder{
+	width: 5px;
+	background-color: #FFFFFF;
+	height: 50px;
+	float: left;	
+}
+.openHorizontalBorder{
+	width: 5px;
+	background-color: #000000;
+	height: 50px;
+	float: left;	
+}
+.closeVerticalBorder{	
+	width: 50px;
+	margin-right: 5px;
+	background-color: #FFFFFF;
+	height: 5px;
+	float: left;
+}
+.openVerticalBorder{
+	width: 50px;
+	margin-right: 5px;
+
+	background-color: #000000;
+	height: 5px;
+	float: left;	
+}

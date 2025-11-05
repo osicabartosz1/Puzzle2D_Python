@@ -1,19 +1,19 @@
 import time
 import os
 import sys
-class Klocek:
+class Block:
 	def __init__(self, inOrder, numberOfBlocks):
 		self.order = inOrder
 		self.count = numberOfBlocks
-		self.Blocks = []
+		self.cubes = []
 		self.rotation = 0
 	def __del__(self):
 		Nothing = 1
 	def addBlock(self, block):
-		self.Blocks.append(block)
+		self.cubes.append(block)
 	def doYouHave(self, inPosX, inPosY):
-		for blok in self.Blocks:
-			if(blok.posX == inPosX and blok.posY == inPosY):
+		for cube in self.cubes:
+			if(cube.posX == inPosX and cube.posY == inPosY):
 				return True
 		return False
 	def obrotZgodnyZWskazowkami(self):
@@ -21,42 +21,42 @@ class Klocek:
 		firstBlokY = 0
 		k = 0
 		self.rotation = (self.rotation + 1) 
-		for blok in self.Blocks:
+		for cube in self.cubes:
 			k = k + 1
 			if k == 1 :
-				firstBlokX = blok.posX
-				firstBlokY = blok.posY
+				firstBlokX = cube.posX
+				firstBlokY = cube.posY
 				continue
-			oldX = blok.posX 
-			oldY = blok.posY
-			blok.posX = firstBlokX + (firstBlokY - oldY)
-			blok.posY = firstBlokY - (firstBlokX - oldX)
+			oldX = cube.posX 
+			oldY = cube.posY
+			cube.posX = firstBlokX + (firstBlokY - oldY)
+			cube.posY = firstBlokY - (firstBlokX - oldX)
 		if self.rotation == 4 or self.rotation == 8:
-			for blok in self.Blocks:
-				oldY = blok.posY
-				blok.posY = firstBlokX + (firstBlokY - oldY)
+			for cube in self.cubes:
+				oldY = cube.posY
+				cube.posY = firstBlokX + (firstBlokY - oldY)
 		if self.rotation >= 8:
 			self.rotation = 0
 			return False
 		else:
 			return True
 	def porusz(self, inX, inY):
-		for blok in self.Blocks:
-			blok.posX = blok.posX + inX
-			blok.posY = blok.posY + inY
+		for cube in self.cubes:
+			cube.posX = cube.posX + inX
+			cube.posY = cube.posY + inY
 	def doesItFitInBox(self):
-		for blok in self.Blocks:
-			if blok.posX < 8 or blok.posX > 15:
+		for cube in self.cubes:
+			if cube.posX < 8 or cube.posX > 15:
 				return False
-			if blok.posY < 8 or blok.posY > 15:
+			if cube.posY < 8 or cube.posY > 15:
 				return False
 		#myBoard.printBoard("t")
 		#time.sleep(10)
 		return True
 	def getPositionOfFirstBlock(self):
-		return str(self.Blocks[0].posX - 8) + str(self.Blocks[0].posY - 8)
+		return str(self.cubes[0].posX - 8) + str(self.cubes[0].posY - 8)
 	def getPositionOfLastBlock(self):
-		return str(self.Blocks[len(self.Blocks)-1].posX -8) + str(self.Blocks[len(self.Blocks)-1].posY -8) 
+		return str(self.cubes[len(self.cubes)-1].posX -8) + str(self.cubes[len(self.cubes)-1].posY -8) 
 	def moveNext(self):
 		posXY = self.getPositionOfFirstBlock()
 		X = int(posXY[0:1])
@@ -87,7 +87,7 @@ class Klocek:
 		self.moveTo(8,8)
 	def loco(self):
 		return str(self.rotation) + self.getPositionOfFirstBlock()
-class Block:
+class Cube:
 	def __init__(self, inPosX, inPosY, inColor, secondInColor):
 		self.posX = inPosX
 		self.posY = inPosY
@@ -96,46 +96,46 @@ class Block:
 	def __del__(self):
 		Nothing = 1
 class Board:
-	Klocki = []
+	blocks = []
 	def __del__(self):
 		self.clearAll()
-	def addKlocek(self, Klocek):
-		self.Klocki.append(Klocek)	
-	def remove(self, klocek):
-		self.Klocki.remove(klocek)
+	def addKlocek(self, block):
+		self.blocks.append(block)	
+	def remove(self, block):
+		self.blocks.remove(block)
 	def clearAll(self):
-		self.Klocki.clear()
-	def isThereAColision(self, Klocek):
-		for kloc in self.Klocki:
-			for blok in kloc.Blocks:
-				if Klocek.doYouHave(blok.posX, blok.posY):
+		self.blocks.clear()
+	def isThereAColision(self, inBlock):
+		for block in self.blocks:
+			for cube in block.cubes:
+				if inBlock.doYouHave(cube.posX, cube.posY):
 					return True
 		return False
 	def verticalBorder(self, inPosX, inPosY):
 		if inPosX == 22:
 			return ""
-		for kloc in self.Klocki:
-			for blok in kloc.Blocks:
-				if (blok.posX == inPosX and blok.posY == inPosY ):
+		for block in self.blocks:
+			for cube in block.cubes:
+				if (cube.posX == inPosX and cube.posY == inPosY ):
 					#blok is not empty
-					if (kloc.doYouHave(inPosX+1,inPosY)):
+					if (block.doYouHave(inPosX+1,inPosY)):
 						return  """<div class = "openHorizontalBorder"></div>\n"""
 		return """<div class = "closeHorizontalBorder"></div>\n"""
 	def horizontalBorder(self, inPosX, inPosY):
 		if inPosY == 22:
 			return ""
-		for kloc in self.Klocki:
-			for blok in kloc.Blocks:
-				if (blok.posX == inPosX and blok.posY == inPosY ):
+		for block in self.blocks:
+			for cube in block.cubes:
+				if (cube.posX == inPosX and cube.posY == inPosY ):
 					#blok is not empty
-					if (kloc.doYouHave(inPosX,inPosY + 1)):
+					if (block.doYouHave(inPosX,inPosY + 1)):
 						return  """<div class = "openVerticalBorder"></div>\n"""
 		return """<div class = "closeVerticalBorder"></div>\n"""
 	def valueOfField(self, inPosX, inPosY):
-		for kloc in self.Klocki:
-			for blok in kloc.Blocks:
-				if (blok.posX == inPosX and blok.posY == inPosY ):
-					return  """<div title = "In otter side """+str(kloc.order)+" "+str(blok.secondColor)+""" "class = "squareKaleidoscope""" + (blok.color if kloc.rotation<4 else blok.secondColor) + """"></div>\n"""
+		for block in self.blocks:
+			for cube in block.cubes:
+				if (cube.posX == inPosX and cube.posY == inPosY ):
+					return  """<div title = "In otter side """+str(block.order)+" "+str(cube.secondColor)+""" "class = "squareKaleidoscope""" + (cube.color if block.rotation<4 else cube.secondColor) + """"></div>\n"""
 		return """<div class = "squareKaleidoscopeEmpty"></div>\n"""
 	def printBoard(self, fileName):
 		fhand = open(MainFolder + '\\' +fileName + '.html','w')
@@ -164,31 +164,31 @@ class Board:
 		fhand.close()
 	def makeHistory(self):
 		hist = ""
-		for kloc in self.Klocki:
-			hist = hist +  str(kloc.rotation) + kloc.getPositionOfFirstBlock()
+		for block in self.blocks:
+			hist = hist +  str(block.rotation) + block.getPositionOfFirstBlock()
 		return hist
 	
 	def doesFitToPattern(self):
-		for kloc in self.Klocki:
-			for blok in kloc.Blocks:
-				color = (blok.color if kloc.rotation<4 else blok.secondColor)
-				pColor = Pattern[(blok.posX - 8)*8 + (blok.posY - 8)]
+		for block in self.blocks:
+			for cube in block.cubes:
+				color = (cube.color if block.rotation<4 else cube.secondColor)
+				pColor = Pattern[(cube.posX - 8)*8 + (cube.posY - 8)]
 				if color != pColor:
 					return False
 		return True
 	
 	def doesKlocekFitToPattern(self, kloc):
-		for blok in kloc.Blocks:
-			color = (blok.color if kloc.rotation<4 else blok.secondColor)
-			pColor = Pattern[(blok.posX - 8)*8 + (blok.posY - 8)]
+		for cube in kloc.cubes:
+			color = (cube.color if kloc.rotation<4 else cube.secondColor)
+			pColor = Pattern[(cube.posX - 8)*8 + (cube.posY - 8)]
 			if color != pColor:
 				return False
 		return True
 	
-	def moveToNextCorrectPosition(self, klocek):
+	def moveToNextCorrectPosition(self, block):
 		try:
-			self.remove(klocek)
-			if not klocek.moveNextFitBox():
+			self.remove(block)
+			if not block.moveNextFitBox():
 				return False
 		except:
 			Nothing = 1 
@@ -212,15 +212,15 @@ class Board:
 			return False
 		if myHoles.count(5) > 0 and myHoles.count(2) > 1 :
 			return False
-		while self.isThereAColision(klocek) or (not klocek.doesItFitInBox()) or (not self.doesKlocekFitToPattern(klocek)):
-			if not klocek.moveNextFitBox():
+		while self.isThereAColision(block) or (not block.doesItFitInBox()) or (not self.doesKlocekFitToPattern(block)):
+			if not block.moveNextFitBox():
 				return False
-		self.addKlocek(klocek)
+		self.addKlocek(block)
 		return True
 	def doesItEmpty(self, i ,j):
-		klocekOne = Klocek(19,1)
-		klocekOne.addBlock(Block(8 + i,8 + j,"Red","Red"))
-		if self.isThereAColision(klocekOne):
+		blockOne = Block(19,1)
+		blockOne.addBlock(Cube(8 + i,8 + j,"Red","Red"))
+		if self.isThereAColision(blockOne):
 			return False
 		else:
 			return True
@@ -350,156 +350,156 @@ class zbiorKlockow:
 	Zbior = []
 	def __init__(self, history):
 		i = 1
-		k1 = Klocek(1,8)
-		k1.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Black"))
-		k1.addBlock(Block(8 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Yellow"))
-		k1.addBlock(Block(8 + int(history[i:i+1]),10 + int(history[i+1:i+2]),"Red", "Black"))
-		k1.addBlock(Block(8 + int(history[i:i+1]),11 + int(history[i+1:i+2]),"Black", "Blue"))
-		k1.addBlock(Block(8 + int(history[i:i+1]),12 + int(history[i+1:i+2]),"Red", "Black"))
-		k1.addBlock(Block(8 + int(history[i:i+1]),13 + int(history[i+1:i+2]),"Black", "Yellow"))
-		k1.addBlock(Block(8 + int(history[i:i+1]),14 + int(history[i+1:i+2]),"Red", "Black"))
-		k1.addBlock(Block(8 + int(history[i:i+1]),15 + int(history[i+1:i+2]),"Black", "Blue"))
+		k1 = Block(1,8)
+		k1.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Black"))
+		k1.addBlock(Cube(8 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Yellow"))
+		k1.addBlock(Cube(8 + int(history[i:i+1]),10 + int(history[i+1:i+2]),"Red", "Black"))
+		k1.addBlock(Cube(8 + int(history[i:i+1]),11 + int(history[i+1:i+2]),"Black", "Blue"))
+		k1.addBlock(Cube(8 + int(history[i:i+1]),12 + int(history[i+1:i+2]),"Red", "Black"))
+		k1.addBlock(Cube(8 + int(history[i:i+1]),13 + int(history[i+1:i+2]),"Black", "Yellow"))
+		k1.addBlock(Cube(8 + int(history[i:i+1]),14 + int(history[i+1:i+2]),"Red", "Black"))
+		k1.addBlock(Cube(8 + int(history[i:i+1]),15 + int(history[i+1:i+2]),"Black", "Blue"))
 		for j in range(int(history[i-1:i])):
 			k1.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k1)
 		i = 4
-		k2 = Klocek(2,4)
-		k2.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]), "Black", "Blue"))
-		k2.addBlock(Block(8 + int(history[i:i+1]),9 + int(history[i+1:i+2]), "Red", "Black"))
-		k2.addBlock(Block(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]), "Black", "Yellow"))
-		k2.addBlock(Block(10 + int(history[i:i+1]),9 + int(history[i+1:i+2]), "Red", "Black"))
+		k2 = Block(2,4)
+		k2.addBlock(Cube(8 + int(history[i:i+1]),9 + int(history[i+1:i+2]), "Red", "Black"))
+		k2.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]), "Black", "Blue"))
+		k2.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]), "Black", "Yellow"))
+		k2.addBlock(Cube(10 + int(history[i:i+1]),9 + int(history[i+1:i+2]), "Red", "Black"))
 		for j in range(int(history[i-1:i])):
 			k2.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k2)
 		i = 7
-		k3 = Klocek(3,4)
-		k3.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Black"))
-		k3.addBlock(Block(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red","Blue"))
-		k3.addBlock(Block(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Black"))
-		k3.addBlock(Block(9 + int(history[i:i+1]),10 + int(history[i+1:i+2]),"Red","Yellow"))
+		k3 = Block(3,4)
+		k3.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Black"))
+		k3.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red","Blue"))
+		k3.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Black"))
+		k3.addBlock(Cube(9 + int(history[i:i+1]),10 + int(history[i+1:i+2]),"Red","Yellow"))
 		for j in range(int(history[i-1:i])):
 			k3.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k3)
 		i = 10
-		k4 = Klocek(4,4)
-		k4.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Blue"))
-		k4.addBlock(Block(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Black"))
-		k4.addBlock(Block(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Yellow"))
-		k4.addBlock(Block(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Yellow"))
+		k4 = Block(4,4)
+		k4.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Blue"))
+		k4.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Black"))
+		k4.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Yellow"))
+		k4.addBlock(Cube(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Yellow"))
 		for j in range(int(history[i-1:i])):
 			k4.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k4)
 		i = 13
-		k5 = Klocek(5,4)
-		k5.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Yellow"))
-		k5.addBlock(Block(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Black"))
-		k5.addBlock(Block(8 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red", "Black"))
-		k5.addBlock(Block(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Blue"))
+		k5 = Block(5,4)
+		k5.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Yellow"))
+		k5.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Black"))
+		k5.addBlock(Cube(8 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red", "Black"))
+		k5.addBlock(Cube(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Blue"))
 		for j in range(int(history[i-1:i])):
 			k5.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k5)
 		i = 16
-		k6 = Klocek(6,4)
-		k6.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Black"))
-		k6.addBlock(Block(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Blue"))
-		k6.addBlock(Block(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Black"))
-		k6.addBlock(Block(10 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red", "Yellow"))
+		k6 = Block(6,4)
+		k6.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Black"))
+		k6.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Blue"))
+		k6.addBlock(Cube(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Black"))
+		k6.addBlock(Cube(10 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red", "Yellow"))
 		for j in range(int(history[i-1:i])):
 			k6.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k6)
 		i = 19
-		k7 = Klocek(7,4)
-		k7.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]), "Red", "Black"))
-		k7.addBlock(Block(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]), "Red", "Black"))
-		k7.addBlock(Block(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]), "Red", "Black"))
-		k7.addBlock(Block(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]), "Black", "Blue"))
+		k7 = Block(7,4)
+		k7.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]), "Red", "Black"))
+		k7.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]), "Red", "Black"))
+		k7.addBlock(Cube(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]), "Red", "Black"))
+		k7.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]), "Black", "Blue"))
 		for j in range(int(history[i-1:i])):
 			k7.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k7)
 		i = 22
-		k8 = Klocek(8,4)
-		k8.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black" ,"Black"))
-		k8.addBlock(Block(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Yellow"))
-		k8.addBlock(Block(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Black"))
-		k8.addBlock(Block(11 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red","Blue"))
+		k8 = Block(8,4)
+		k8.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black" ,"Black"))
+		k8.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Yellow"))
+		k8.addBlock(Cube(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Black"))
+		k8.addBlock(Cube(11 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red","Blue"))
 		for j in range(int(history[i-1:i])):
 			k8.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k8)
 		i = 25
-		k9 = Klocek(9,4)
-		k9.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Yellow"))
-		k9.addBlock(Block(8 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red","Black"))
-		k9.addBlock(Block(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Blue"))
-		k9.addBlock(Block(9 + int(history[i:i+1]),10 + int(history[i+1:i+2]),"Red","Black"))
+		k9 = Block(9,4)
+		k9.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Yellow"))
+		k9.addBlock(Cube(8 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red","Black"))
+		k9.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Blue"))
+		k9.addBlock(Cube(9 + int(history[i:i+1]),10 + int(history[i+1:i+2]),"Red","Black"))
 		for j in range(int(history[i-1:i])):
 			k9.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k9)
 		i = 28
-		k10 = Klocek(10,4)
-		k10.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Black"))
-		k10.addBlock(Block(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red","Yellow"))
-		k10.addBlock(Block(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Black"))
-		k10.addBlock(Block(10 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red","Blue"))
+		k10 = Block(10,4)
+		k10.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Black"))
+		k10.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red","Yellow"))
+		k10.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Black"))
+		k10.addBlock(Cube(10 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red","Blue"))
 		for j in range(int(history[i-1:i])):
 			k10.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k10)
 		i = 31
-		k11 = Klocek(11,4)
-		k11.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Yellow"))
-		k11.addBlock(Block(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red","Black"))
-		k11.addBlock(Block(8 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red","Black"))
-		k11.addBlock(Block(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Blue"))
+		k11 = Block(11,4)
+		k11.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Yellow"))
+		k11.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red","Black"))
+		k11.addBlock(Cube(8 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red","Black"))
+		k11.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Blue"))
 		for j in range(int(history[i-1:i])):
 			k11.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k11)
 		i = 34
-		k12 = Klocek(12,3)
-		k12.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Yellow"))
-		k12.addBlock(Block(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Black"))
-		k12.addBlock(Block(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red", "Blue"))
+		k12 = Block(12,3)
+		k12.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Black"))
+		k12.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Yellow"))
+		k12.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red", "Blue"))
 		for j in range(int(history[i-1:i])):
 			k12.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k12)
 		i = 37
-		k13 = Klocek(13,3)
-		k13.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Black"))
-		k13.addBlock(Block(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Yellow"))
-		k13.addBlock(Block(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Black"))
+		k13 = Block(13,3)
+		k13.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Black"))
+		k13.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Yellow"))
+		k13.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Black"))
 		for j in range(int(history[i-1:i])):
 			k13.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k13)
 		i = 40
-		k14 = Klocek(14,3)
-		k14.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Black"))
-		k14.addBlock(Block(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Yellow"))
-		k14.addBlock(Block(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Black"))
+		k14 = Block(14,3)
+		k14.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Black"))
+		k14.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Yellow"))
+		k14.addBlock(Cube(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Black"))
 		for j in range(int(history[i-1:i])):
 			k14.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k14)
 		i = 43
-		k15 = Klocek(15,3)
-		k15.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Yellow"))
-		k15.addBlock(Block(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Black"))
-		k15.addBlock(Block(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Blue"))
+		k15 = Block(15,3)
+		k15.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Yellow"))
+		k15.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Black"))
+		k15.addBlock(Cube(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Blue"))
 		for j in range(int(history[i-1:i])):
 			k15.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k15)
 		i = 46
-		k16 = Klocek(16,2)
-		k16.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red","Black"))
-		k16.addBlock(Block(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Blue"))
+		k16 = Block(16,2)
+		k16.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red","Black"))
+		k16.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Blue"))
 		for j in range(int(history[i-1:i])):
 			k16.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k16)
 		i = 49
-		k17 = Klocek(17,1)
-		k17.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Blue"))
+		k17 = Block(17,1)
+		k17.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Blue"))
 		for j in range(int(history[i-1:i])):
 			k17.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k17)
 		i = 52
-		k18 = Klocek(18,1)
-		k18.addBlock(Block(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red","Black"))
+		k18 = Block(18,1)
+		k18.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red","Black"))
 		for j in range(int(history[i-1:i])):
 			k18.obrotZgodnyZWskazowkami()
 		self.Zbior.append(k18)
@@ -559,17 +559,14 @@ counter = 0
 #Earth Zones
 Pattern = ["Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Yellow", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Black", "Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Yellow", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Black"]
 
-#Szachownica
+#Checkerboard
 #Pattern = ["Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red", "Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red","Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red","Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red"]
 
 #Elephant
 #Pattern = ["Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black","Black" ,"Red", "Black", "Red", "Red", "Red", "Black", "Red", "Red", "Black" ,"Red", "Red", "Black", "Black", "Black", "Red", "Black" ,"Red", "Black", "Black", "Black", "Black", "Red", "Black", "Red", "Red" ,"Black", "Black", "Black", "Red", "Black", "Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Red", "Black", "Red", "Red" ,"Black", "Red", "Black", "Red", "Black", "Red", "Red" ,"Black", "Red", "Black", "Red", "Black", "Red", "Black"]
 
-
 #Elephant 2
 #Pattern = ["Red","Black","Red","Black","Red","Black","Red","Red","Black","Red","Black","Red","Red","Red","Red","Black","Red","Black","Red","Black","Black","Black","Black","Red","Black","Red","Red","Black","Black","Red","Red","Black","Red","Red","Black","Black","Black","Black","Black","Red","Black","Red","Black","Black","Red","Red","Red","Black","Red","Black","Black","Red","Black","Red","Black","Red","Black","Red","Red","Black","Red","Black","Red","Black"]
-
-
 
 MainFolder = os.getcwd()
 print("Start = " + str(startTime))
