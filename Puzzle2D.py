@@ -2,9 +2,9 @@ import time
 import os
 import sys
 class Block:
-	def __init__(self, inOrder, numberOfBlocks):
+	def __init__(self, inOrder, numberOfCubes):
 		self.order = inOrder
-		self.count = numberOfBlocks
+		self.count = numberOfCubes
 		self.cubes = []
 		self.rotation = 0
 	def __del__(self):
@@ -16,7 +16,7 @@ class Block:
 			if(cube.posX == inPosX and cube.posY == inPosY):
 				return True
 		return False
-	def obrotZgodnyZWskazowkami(self):
+	def clockwiseRotation(self):
 		firstBlokX = 0
 		firstBlokY = 0
 		k = 0
@@ -40,7 +40,7 @@ class Block:
 			return False
 		else:
 			return True
-	def porusz(self, inX, inY):
+	def moveXY(self, inX, inY):
 		for cube in self.cubes:
 			cube.posX = cube.posX + inX
 			cube.posY = cube.posY + inY
@@ -63,7 +63,7 @@ class Block:
 		Y = int(posXY[1:2])
 		if X >= 7 and Y>=7:
 			self.moveTo(8,8)
-			return self.obrotZgodnyZWskazowkami()
+			return self.clockwiseRotation()
 		if Y >= 7:
 			self.moveTo(8 + X + 1,8)
 		if Y < 7:
@@ -73,7 +73,7 @@ class Block:
 		posXY = self.getPositionOfFirstBlock()
 		X = int(posXY[0:1]) + 8
 		Y = int(posXY[1:2]) + 8
-		self.porusz(inX - X, inY - Y)
+		self.moveXY(inX - X, inY - Y)
 	def moveNextFitBox(self):
 		while True:			
 			if not self.moveNext():
@@ -83,7 +83,7 @@ class Block:
 		return True
 	def resetPosition(self):
 		while self.rotation != 0:
-			self.obrotZgodnyZWskazowkami()
+			self.clockwiseRotation()
 		self.moveTo(8,8)
 	def loco(self):
 		return str(self.rotation) + self.getPositionOfFirstBlock()
@@ -194,7 +194,7 @@ class Board:
 			Nothing = 1 
 		if not self.doesFitToPattern():
 			return False
-		##if self.MechanizmPustychPol() > 2:
+		##if self.emptyFieldsMechanism() > 2:
 		##return False
 		myHolesFinder.holes.clear()
 		myHoles = myHolesFinder.finder()
@@ -224,7 +224,7 @@ class Board:
 			return False
 		else:
 			return True
-	def MechanizmPustychPol(self):
+	def emptyFieldsMechanism(self):
 		count = 0
 		for i in range(8):
 			for j in range(8):
@@ -346,7 +346,7 @@ class holesFinder:
 			ht = h.strip(";").split(";")
 			c = c + len(ht)
 		return c
-class zbiorKlockow:
+class setOfBlocks:
 	Zbior = []
 	def __init__(self, history):
 		i = 1
@@ -360,7 +360,7 @@ class zbiorKlockow:
 		k1.addBlock(Cube(8 + int(history[i:i+1]),14 + int(history[i+1:i+2]),"Red", "Black"))
 		k1.addBlock(Cube(8 + int(history[i:i+1]),15 + int(history[i+1:i+2]),"Black", "Blue"))
 		for j in range(int(history[i-1:i])):
-			k1.obrotZgodnyZWskazowkami()
+			k1.clockwiseRotation()
 		self.Zbior.append(k1)
 		i = 4
 		k2 = Block(2,4)
@@ -369,7 +369,7 @@ class zbiorKlockow:
 		k2.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]), "Black", "Yellow"))
 		k2.addBlock(Cube(10 + int(history[i:i+1]),9 + int(history[i+1:i+2]), "Red", "Black"))
 		for j in range(int(history[i-1:i])):
-			k2.obrotZgodnyZWskazowkami()
+			k2.clockwiseRotation()
 		self.Zbior.append(k2)
 		i = 7
 		k3 = Block(3,4)
@@ -378,7 +378,7 @@ class zbiorKlockow:
 		k3.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Black"))
 		k3.addBlock(Cube(9 + int(history[i:i+1]),10 + int(history[i+1:i+2]),"Red","Yellow"))
 		for j in range(int(history[i-1:i])):
-			k3.obrotZgodnyZWskazowkami()
+			k3.clockwiseRotation()
 		self.Zbior.append(k3)
 		i = 10
 		k4 = Block(4,4)
@@ -387,7 +387,7 @@ class zbiorKlockow:
 		k4.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Yellow"))
 		k4.addBlock(Cube(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Yellow"))
 		for j in range(int(history[i-1:i])):
-			k4.obrotZgodnyZWskazowkami()
+			k4.clockwiseRotation()
 		self.Zbior.append(k4)
 		i = 13
 		k5 = Block(5,4)
@@ -396,7 +396,7 @@ class zbiorKlockow:
 		k5.addBlock(Cube(8 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red", "Black"))
 		k5.addBlock(Cube(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Blue"))
 		for j in range(int(history[i-1:i])):
-			k5.obrotZgodnyZWskazowkami()
+			k5.clockwiseRotation()
 		self.Zbior.append(k5)
 		i = 16
 		k6 = Block(6,4)
@@ -405,7 +405,7 @@ class zbiorKlockow:
 		k6.addBlock(Cube(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Black"))
 		k6.addBlock(Cube(10 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red", "Yellow"))
 		for j in range(int(history[i-1:i])):
-			k6.obrotZgodnyZWskazowkami()
+			k6.clockwiseRotation()
 		self.Zbior.append(k6)
 		i = 19
 		k7 = Block(7,4)
@@ -414,7 +414,7 @@ class zbiorKlockow:
 		k7.addBlock(Cube(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]), "Red", "Black"))
 		k7.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]), "Black", "Blue"))
 		for j in range(int(history[i-1:i])):
-			k7.obrotZgodnyZWskazowkami()
+			k7.clockwiseRotation()
 		self.Zbior.append(k7)
 		i = 22
 		k8 = Block(8,4)
@@ -423,7 +423,7 @@ class zbiorKlockow:
 		k8.addBlock(Cube(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black", "Black"))
 		k8.addBlock(Cube(11 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red","Blue"))
 		for j in range(int(history[i-1:i])):
-			k8.obrotZgodnyZWskazowkami()
+			k8.clockwiseRotation()
 		self.Zbior.append(k8)
 		i = 25
 		k9 = Block(9,4)
@@ -432,7 +432,7 @@ class zbiorKlockow:
 		k9.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Blue"))
 		k9.addBlock(Cube(9 + int(history[i:i+1]),10 + int(history[i+1:i+2]),"Red","Black"))
 		for j in range(int(history[i-1:i])):
-			k9.obrotZgodnyZWskazowkami()
+			k9.clockwiseRotation()
 		self.Zbior.append(k9)
 		i = 28
 		k10 = Block(10,4)
@@ -441,7 +441,7 @@ class zbiorKlockow:
 		k10.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Black"))
 		k10.addBlock(Cube(10 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red","Blue"))
 		for j in range(int(history[i-1:i])):
-			k10.obrotZgodnyZWskazowkami()
+			k10.clockwiseRotation()
 		self.Zbior.append(k10)
 		i = 31
 		k11 = Block(11,4)
@@ -450,7 +450,7 @@ class zbiorKlockow:
 		k11.addBlock(Cube(8 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red","Black"))
 		k11.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Blue"))
 		for j in range(int(history[i-1:i])):
-			k11.obrotZgodnyZWskazowkami()
+			k11.clockwiseRotation()
 		self.Zbior.append(k11)
 		i = 34
 		k12 = Block(12,3)
@@ -458,7 +458,7 @@ class zbiorKlockow:
 		k12.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Black"))
 		k12.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red", "Blue"))
 		for j in range(int(history[i-1:i])):
-			k12.obrotZgodnyZWskazowkami()
+			k12.clockwiseRotation()
 		self.Zbior.append(k12)
 		i = 37
 		k13 = Block(13,3)
@@ -466,7 +466,7 @@ class zbiorKlockow:
 		k13.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Yellow"))
 		k13.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Black", "Black"))
 		for j in range(int(history[i-1:i])):
-			k13.obrotZgodnyZWskazowkami()
+			k13.clockwiseRotation()
 		self.Zbior.append(k13)
 		i = 40
 		k14 = Block(14,3)
@@ -474,7 +474,7 @@ class zbiorKlockow:
 		k14.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Yellow"))
 		k14.addBlock(Cube(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Black"))
 		for j in range(int(history[i-1:i])):
-			k14.obrotZgodnyZWskazowkami()
+			k14.clockwiseRotation()
 		self.Zbior.append(k14)
 		i = 43
 		k15 = Block(15,3)
@@ -482,41 +482,41 @@ class zbiorKlockow:
 		k15.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Black"))
 		k15.addBlock(Cube(10 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Blue"))
 		for j in range(int(history[i-1:i])):
-			k15.obrotZgodnyZWskazowkami()
+			k15.clockwiseRotation()
 		self.Zbior.append(k15)
 		i = 46
 		k16 = Block(16,2)
 		k16.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red","Black"))
 		k16.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Blue"))
 		for j in range(int(history[i-1:i])):
-			k16.obrotZgodnyZWskazowkami()
+			k16.clockwiseRotation()
 		self.Zbior.append(k16)
 		i = 49
 		k17 = Block(17,1)
 		k17.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Blue"))
 		for j in range(int(history[i-1:i])):
-			k17.obrotZgodnyZWskazowkami()
+			k17.clockwiseRotation()
 		self.Zbior.append(k17)
 		i = 52
 		k18 = Block(18,1)
 		k18.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red","Black"))
 		for j in range(int(history[i-1:i])):
-			k18.obrotZgodnyZWskazowkami()
+			k18.clockwiseRotation()
 		self.Zbior.append(k18)
 	def __del__(self):
 		self.Zbior.clear()
-def PlaceBrick(nr):
+def PlaceBlock(nr):
 	if(nr == 6):
 		saveHistory(myBoard.makeHistory())
 	if(nr == 18):
 		myBoard.printBoard(myBoard.makeHistory())
 		print("last history = " + myBoard.makeHistory())
 		return True
-	while myBoard.moveToNextCorrectPosition(myZbiorKlockow.Zbior[nr]):
-		if PlaceBrick(nr + 1):
+	while myBoard.moveToNextCorrectPosition(mySetOfBlocks.Zbior[nr]):
+		if PlaceBlock(nr + 1):
 			return True
 	for r in range(nr , 18):
-		myZbiorKlockow.Zbior[r].resetPosition()
+		mySetOfBlocks.Zbior[r].resetPosition()
 	return False
 def addOne(inputStr, where):
 	if len(inputStr) == 0:
@@ -599,7 +599,7 @@ while True:
 	print( "old  history = " + history)
 	
 	try:
-		del  myZbiorKlockow
+		del  mySetOfBlocks
 	except:
 		Nothing = 1
 	try:
@@ -608,8 +608,8 @@ while True:
 		Nothing = 1
 	myBoard = Board()
 	myHolesFinder = holesFinder()
-	myZbiorKlockow = zbiorKlockow(history)
-	PlaceBrick(0)
+	mySetOfBlocks = setOfBlocks(history)
+	PlaceBlock(0)
 	EndTime = time.time()
 
 print("End = " + str(EndTime))
