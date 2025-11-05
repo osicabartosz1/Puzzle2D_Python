@@ -364,8 +364,8 @@ class zbiorKlockow:
 		self.Zbior.append(k1)
 		i = 4
 		k2 = Block(2,4)
-		k2.addBlock(Cube(8 + int(history[i:i+1]),9 + int(history[i+1:i+2]), "Red", "Black"))
 		k2.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]), "Black", "Blue"))
+		k2.addBlock(Cube(8 + int(history[i:i+1]),9 + int(history[i+1:i+2]), "Red", "Black"))
 		k2.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]), "Black", "Yellow"))
 		k2.addBlock(Cube(10 + int(history[i:i+1]),9 + int(history[i+1:i+2]), "Red", "Black"))
 		for j in range(int(history[i-1:i])):
@@ -454,8 +454,8 @@ class zbiorKlockow:
 		self.Zbior.append(k11)
 		i = 34
 		k12 = Block(12,3)
-		k12.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Black"))
 		k12.addBlock(Cube(8 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Red", "Yellow"))
+		k12.addBlock(Cube(9 + int(history[i:i+1]),8 + int(history[i+1:i+2]),"Black","Black"))
 		k12.addBlock(Cube(9 + int(history[i:i+1]),9 + int(history[i+1:i+2]),"Red", "Blue"))
 		for j in range(int(history[i-1:i])):
 			k12.obrotZgodnyZWskazowkami()
