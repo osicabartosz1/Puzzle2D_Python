@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CSS Template</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href = "style.css" type="text/css">
+   <script>
+    // Skrypt JS
+    function printResult(){
+      const container = document.getElementById('container');
+      const resultElement = document.getElementById('result');
+      const colors = [];
+	
+      // Pobieramy wszystkie dzieci diva #container
+      const children = container.children;
+
+      // Iterujemy po dzieciach
+      for (let child of children) {
+        if (child.classList.contains('squareKaleidoscopeRed')) {
+          colors.push('Red');
+        } else if (child.classList.contains('squareKaleidoscopeBlack')) {
+          colors.push('Black');
+        }else if (child.classList.contains('squareKaleidoscopeBlue')) {
+          colors.push('Blue');
+        }else if (child.classList.contains('squareKaleidoscopeYellow')) {
+          colors.push('Yellow');
+        }
+      }
+
+      // Tworzymy string z tablicy i wstawiamy do <p id="result">
+      resultElement.textContent = "[\""+colors.join("\", \"")+"\"]";
+    }
+	
+	  document.addEventListener('click', (event) => {
+    const el = event.target;
+
+    // Sprawdź czy kliknięty element ma jedną z klas
+    if (el.classList.contains('squareKaleidoscopeRed')) {
+      el.classList.remove('squareKaleidoscopeRed');
+      el.classList.add('squareKaleidoscopeBlack');
+    } 
+	else if (el.classList.contains('squareKaleidoscopeBlack')) {
+      el.classList.remove('squareKaleidoscopeBlack');
+      el.classList.add('squareKaleidoscopeBlue');
+    }
+	else if (el.classList.contains('squareKaleidoscopeBlue')) {
+      el.classList.remove('squareKaleidoscopeBlue');
+      el.classList.add('squareKaleidoscopeYellow');
+    }
+	else if (el.classList.contains('squareKaleidoscopeYellow')) {
+      el.classList.remove('squareKaleidoscopeYellow');
+      el.classList.add('squareKaleidoscopeRed');
+    }
+  });
+  </script>
+  </head>
+
+<body>
+<button onclick=printResult()>Drukuj</button>
+<h1 id="result"></h1>
+<div class="controls">
+  <label>
+    Kąt: <span id="angleLabel">0°</span>
+  </label><br>
+  <!-- suwak: min, max, step -->
+  <input id="slider" type="range" min="-180" max="180" step="45" value="0">
+</div>
+	<div id="container"><div title = "In otter side 10 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 6 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "openHorizontalBorder"></div>
+<div title = "In otter side 6 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 1 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 14 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 5 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "openHorizontalBorder"></div>
+<div title = "In otter side 5 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 16 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "closeHorizontalBorder"></div>
+<div style = "clear:both;"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div style = "clear:both;"></div>
+<div title = "In otter side 10 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "openHorizontalBorder"></div>
+<div title = "In otter side 10 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 6 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 1 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 14 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 5 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 4 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 16 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div style = "clear:both;"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div style = "clear:both;"></div>
+<div title = "In otter side 18 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 10 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 6 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 1 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 14 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 5 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 4 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "openHorizontalBorder"></div>
+<div title = "In otter side 4 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "closeHorizontalBorder"></div>
+<div style = "clear:both;"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div style = "clear:both;"></div>
+<div title = "In otter side 2 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "openHorizontalBorder"></div>
+<div title = "In otter side 2 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 15 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 1 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 3 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "openHorizontalBorder"></div>
+<div title = "In otter side 3 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 4 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 7 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div style = "clear:both;"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div style = "clear:both;"></div>
+<div title = "In otter side 8 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 2 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 15 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 1 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 3 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 12 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 7 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "openHorizontalBorder"></div>
+<div title = "In otter side 7 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "closeHorizontalBorder"></div>
+<div style = "clear:both;"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div style = "clear:both;"></div>
+<div title = "In otter side 8 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 2 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 15 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 1 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 3 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 12 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "openHorizontalBorder"></div>
+<div title = "In otter side 12 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 7 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div style = "clear:both;"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div style = "clear:both;"></div>
+<div title = "In otter side 8 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 11 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "openHorizontalBorder"></div>
+<div title = "In otter side 11 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 1 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 9 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "openHorizontalBorder"></div>
+<div title = "In otter side 9 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 13 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "openHorizontalBorder"></div>
+<div title = "In otter side 13 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "closeHorizontalBorder"></div>
+<div style = "clear:both;"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "openVerticalBorder"></div>
+<div style = "clear:both;"></div>
+<div title = "In otter side 8 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 11 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "openHorizontalBorder"></div>
+<div title = "In otter side 11 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 1 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 17 Blue "class = "squareKaleidoscopeBlue"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 9 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "openHorizontalBorder"></div>
+<div title = "In otter side 9 Yellow "class = "squareKaleidoscopeYellow"></div>
+<div class = "closeHorizontalBorder"></div>
+<div title = "In otter side 13 Black "class = "squareKaleidoscopeBlack"></div>
+<div class = "closeHorizontalBorder"></div>
+<div style = "clear:both;"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div class = "closeVerticalBorder"></div>
+<div style = "clear:both;"></div>
+	</div>
+    <script>
+		const slider = document.getElementById('slider');
+		const box = document.querySelector('#container');
+		const label = document.getElementById('angleLabel');
+
+		slider.addEventListener('input', (e) => {
+		nextDeg = e.target.value;
+		let pending = false;
+
+		label.textContent = nextDeg + '°';
+		if (!pending) {
+			pending = true;
+			requestAnimationFrame(() => {
+				box.style.transform = `rotate(${nextDeg}deg)`;
+				pending = false;
+				});
+			}
+		});
+  </script>
+</body>
+</html>
