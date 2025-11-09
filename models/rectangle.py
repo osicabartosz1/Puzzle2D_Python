@@ -11,5 +11,11 @@ class Rectangle:
     def perimeter(self):
         return 2 * (self.width + self.height)
 
+    def xMax(self):
+        return self.X + self.width
+
+    def yMax(self):
+        return self.Y + self.height
+
     def __str__(self):
         return f"Rectangle({self.width} x {self.height})"

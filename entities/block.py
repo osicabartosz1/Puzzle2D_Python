@@ -1,14 +1,4 @@
-from models.rectangle import Rectangle
-
-class BlockBase:
-	def __init__(self, inOrder, numberOfCubes):
-		self.order = inOrder
-		self.count = numberOfCubes
-		self.cubes = []
-		self.rotation = 0
-		self.rect = Rectangle(8,8,8,8)
-	def __del__(self):
-		Nothing = 1
+from models.block_base import BlockBase
 
 class Block(BlockBase):
 	def __init__(self, inOrder, numberOfCubes):
@@ -50,15 +40,15 @@ class Block(BlockBase):
 			cube.posY = cube.posY + inY
 	def doesItFitInBox(self):
 		for cube in self.cubes:
-			if cube.posX < 8 or cube.posX > 15:
+			if cube.posX < self.rect.X or cube.posX >= self.rect.xMax():
 				return False
-			if cube.posY < 8 or cube.posY > 15:
+			if cube.posY < self.rect.Y or cube.posY >= self.rect.yMax():
 				return False
 		return True
 	def getPositionOfFirstBlock(self):
-		return str(self.cubes[0].posX - 8) + str(self.cubes[0].posY - 8)
+		return str(self.cubes[0].posX - self.rect.X) + str(self.cubes[0].posY - self.rect.Y)
 	def getPositionOfLastBlock(self):
-		return str(self.cubes[len(self.cubes)-1].posX -8) + str(self.cubes[len(self.cubes)-1].posY -8) 
+		return str(self.cubes[len(self.cubes)-1].posX - self.rect.X) + str(self.cubes[len(self.cubes)-1].posY - self.rect.Y) 
 	def moveNext(self):
 		posXY = self.getPositionOfFirstBlock()
 		X = int(posXY[0:1])
@@ -73,8 +63,8 @@ class Block(BlockBase):
 		return True
 	def moveTo(self, inX, inY):
 		posXY = self.getPositionOfFirstBlock()
-		X = int(posXY[0:1]) + 8
-		Y = int(posXY[1:2]) + 8
+		X = int(posXY[0:1]) + self.rect.X
+		Y = int(posXY[1:2]) + self.rect.Y
 		self.moveXY(inX - X, inY - Y)
 	def moveNextFitBox(self):
 		while True:			
@@ -86,6 +76,6 @@ class Block(BlockBase):
 	def resetPosition(self):
 		while self.rotation != 0:
 			self.clockwiseRotation()
-		self.moveTo(8,8)
+		self.moveTo(self.rect.X,self.rect.Y)
 	def loco(self):
 		return str(self.rotation) + self.getPositionOfFirstBlock()
