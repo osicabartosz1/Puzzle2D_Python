@@ -1,0 +1,10 @@
+from enum import Enum
+
+class Pattern(Enum):
+    Earth_Zones = ["Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Yellow", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Black", "Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Yellow", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Black", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Blue", "Black", "Yellow", "Black", "Blue", "Black", "Yellow", "Black"]
+
+    Checkerboard = ["Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red", "Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red","Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red","Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black", "Red"]
+
+    Elephant = ["Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Black","Black" ,"Red", "Black", "Red", "Red", "Red", "Black", "Red", "Red", "Black" ,"Red", "Red", "Black", "Black", "Black", "Red", "Black" ,"Red", "Black", "Black", "Black", "Black", "Red", "Black", "Red", "Red" ,"Black", "Black", "Black", "Red", "Black", "Red", "Black" ,"Red", "Black", "Red", "Black", "Red", "Red", "Black", "Red", "Red" ,"Black", "Red", "Black", "Red", "Black", "Red", "Red" ,"Black", "Red", "Black", "Red", "Black", "Red", "Black"]
+
+    Elephant2 = ["Red","Black","Red","Black","Red","Black","Red","Red","Black","Red","Black","Red","Red","Red","Red","Black","Red","Black","Red","Black","Black","Black","Black","Red","Black","Red","Red","Black","Black","Red","Red","Black","Red","Red","Black","Black","Black","Black","Black","Red","Black","Red","Black","Black","Red","Red","Red","Black","Red","Black","Black","Red","Black","Red","Black","Red","Black","Red","Red","Black","Red","Black","Red","Black"]
