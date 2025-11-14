@@ -3,6 +3,9 @@ from entities.block import Block
 from entities.cube import Cube
 from entities.holes_finder import HolesFinder
 
+from printer.printer import Printer
+
+
 class Board:
 	def __init__(self, inPattern):
 		self.Pattern = inPattern
@@ -10,7 +13,7 @@ class Board:
 	def __del__(self):
 		self.clearAll()
 	def addKlocek(self, block):
-		self.blocks.append(block)	
+		self.blocks.append(block)
 	def remove(self, block):
 		self.blocks.remove(block)
 	def clearAll(self):
@@ -56,10 +59,23 @@ class Board:
 			return False
 		##if self.emptyFieldsMechanism() > 2:
 		##return False
-		myHolesFinder = HolesFinder(self);
+		if not self.hasBoardSpaceForOtterPieces():
+			return False
+
+		while self.isThereAColision(block) or (not block.doesItFitInBox()) or (not self.doesKlocekFitToPattern(block)):
+			if not block.moveNextFitBox():
+				return False
+		self.addKlocek(block)
+		return True
+	
+	def hasBoardSpaceForOtterPieces(self):
+		myHolesFinder = HolesFinder(self)
 		myHolesFinder.holes.clear()
 		myHoles = myHolesFinder.finder()
 		if myHoles.count(1) > 2:
+			#myPrinter = Printer(self)
+			#history = self.makeHistory()
+			#myPrinter.printBoard(history)
 			return False
 		if myHoles.count(2) > 2:
 			return False
@@ -73,11 +89,8 @@ class Board:
 			return False
 		if myHoles.count(5) > 0 and myHoles.count(2) > 1 :
 			return False
-		while self.isThereAColision(block) or (not block.doesItFitInBox()) or (not self.doesKlocekFitToPattern(block)):
-			if not block.moveNextFitBox():
-				return False
-		self.addKlocek(block)
 		return True
+
 	def doesItEmpty(self, i ,j):
 		blockOne = Block(19,1)
 		blockOne.addCube(Cube(8 + i,8 + j,"Red","Red"))
