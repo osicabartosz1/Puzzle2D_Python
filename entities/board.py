@@ -86,11 +86,15 @@ class Board:
 			# 	print(mySlots)
 
 			return False
-		if myEmptySlotsFinder.numberOfDoubleSlots > 0 and myEmptySlotsFinder.numberOfQuintupleSlots > 1 :
-			return False
+		# if myEmptySlotsFinder.numberOfDoubleSlots > 0 and myEmptySlotsFinder.numberOfQuintupleSlots > 1 : case ok if all 4Block already on the board/ late game
+		# 	return False
 		if myEmptySlotsFinder.numberOfSingleSlots > 1 and myEmptySlotsFinder.numberOfDoubleSlots > 0 and myEmptySlotsFinder.numberOfQuintupleSlots > 0 :
 			return False
-		if myEmptySlotsFinder.numberOfQuintupleSlots > 0 and myEmptySlotsFinder.numberOfDoubleSlots > 1 :
+		if myEmptySlotsFinder.numberOfDoubleSlots > 1 and myEmptySlotsFinder.numberOfQuintupleSlots > 0 :
+			# myPrinter = Printer(self)
+			# history = self.makeHistory()
+			# myPrinter.printBoard(history)
+			# print(mySlots)
 			return False
 		return True
 
