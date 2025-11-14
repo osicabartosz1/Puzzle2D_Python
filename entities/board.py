@@ -1,7 +1,7 @@
 from entities.block import Block
 
 from entities.cube import Cube
-from entities.holes_finder import HolesFinder
+from entities.holes_finder import EmptySlotsFinder
 
 from printer.printer import Printer
 
@@ -69,25 +69,28 @@ class Board:
 		return True
 	
 	def hasBoardSpaceForOtterPieces(self):
-		myHolesFinder = HolesFinder(self)
-		myHolesFinder.holes.clear()
-		myHoles = myHolesFinder.finder()
-		if myHoles.count(1) > 2:
-			#myPrinter = Printer(self)
-			#history = self.makeHistory()
-			#myPrinter.printBoard(history)
+		myEmptySlotsFinder = EmptySlotsFinder(self)
+		myEmptySlotsFinder.holes.clear()
+		mySlots = myEmptySlotsFinder.find()
+		if myEmptySlotsFinder.numberOfSingleSlots > 2: #More than 2 single slot
 			return False
-		if myHoles.count(2) > 2:
+		if myEmptySlotsFinder.numberOfDoubleSlots > 2: #More than 2 double slot
 			return False
-		if myHoles.count(1) > 0 and myHoles.count(2) > 1 :
+		if myEmptySlotsFinder.numberOfSingleSlots > 0 and myEmptySlotsFinder.numberOfDoubleSlots  > 1 : #Case 2 double slots and one single slot
 			return False
-		if myHoles.count(1) > 0 and myHoles.count(5) > 1 :
+		if myEmptySlotsFinder.numberOfSingleSlots + myEmptySlotsFinder.numberOfDoubleSlots > 1 and myEmptySlotsFinder.numberOfQuintupleSlots > 1 :
+			# if myEmptySlotsFinder.numberOfDoubleSlots == 0:
+			# 	myPrinter = Printer(self)
+			# 	history = self.makeHistory()
+			# 	myPrinter.printBoard(history)
+			# 	print(mySlots)
+
 			return False
-		if myHoles.count(2)> 0 and myHoles.count(5) > 1 :
+		if myEmptySlotsFinder.numberOfDoubleSlots > 0 and myEmptySlotsFinder.numberOfQuintupleSlots > 1 :
 			return False
-		if myHoles.count(1)> 1 and myHoles.count(5) > 0 and myHoles.count(2) > 0 :
+		if myEmptySlotsFinder.numberOfSingleSlots > 1 and myEmptySlotsFinder.numberOfDoubleSlots > 0 and myEmptySlotsFinder.numberOfQuintupleSlots > 0 :
 			return False
-		if myHoles.count(5) > 0 and myHoles.count(2) > 1 :
+		if myEmptySlotsFinder.numberOfQuintupleSlots > 0 and myEmptySlotsFinder.numberOfDoubleSlots > 1 :
 			return False
 		return True
 

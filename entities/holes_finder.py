@@ -1,8 +1,8 @@
-class HolesFinder:
+class EmptySlotsFinder:
 	def __init__(self, board):
 		self.myBoard = board
 	holes = []
-	def finder(self):
+	def find(self):
 		matrix = self.myBoard.makeMatrix()
 		count = 0
 		for i in range(8):
@@ -39,6 +39,13 @@ class HolesFinder:
 		ret = []
 		for h in self.holes:
 			ret.append(len(h.strip(";").split(";")))
+		self.numberOfSingleSlots = ret.count(1)
+		self.numberOfDoubleSlots = ret.count(2)
+		self.numberOfTripleSlots = ret.count(3)
+		self.numberOfQuadrupleSlots = ret.count(4)
+		self.numberOfQuintupleSlots = ret.count(5)
+		self.numberOfSixtupleSlots= ret.count(6)
+		self.numberOfSeptupleSlots= ret.count(7)
 		return ret
 	def isHomeinHoles(self, home):
 		for h in self.holes:
