@@ -25,8 +25,9 @@ class BruteForce():
             self.myFileHelper.saveHistory(self.myBoard.makeHistory())
         if(nr == 18):
             myPrinter = Printer(self.myBoard);
-            myPrinter.printBoard(self.myBoard.makeHistory())
-            print("last history = " + self.myBoard.makeHistory())
+            self.history = self.myBoard.makeHistory();
+            myPrinter.printBoard(self.history)
+            print("last history = " + self.history)
             return True
         while self.myBoard.moveToNextCorrectPosition(self.mySetOfBlocks.Zbior[nr]):
             if self.PlaceBlock(nr + 1):
